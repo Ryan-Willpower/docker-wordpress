@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  php:
+    image: php:7.3-fpm-alpine
+    volumes:
+      - ./web:/var/www/html
+    networks:
+      - wordpress_site
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d
+      - ./web:/var/www/html
+    networks:
+      - wordpress_site
+    ports:
+      - 80:80
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - wordpress_site
+    ports:
+      - 3306:3306
+
+networks:
+  wordpress_site:
