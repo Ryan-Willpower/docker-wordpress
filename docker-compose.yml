@@ -2,7 +2,7 @@ version: "3"
 
 services:
   php:
-    image: php:7.3-fpm-alpine
+    image: php-mysql
     volumes:
       - ./web:/var/www/html
     networks:
